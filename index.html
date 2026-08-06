@@ -776,7 +776,8 @@ button,input,select{font-family:var(--sans);font-size:14px;color:var(--ink)}
 .chip:hover{border-color:var(--aqua);transform:translateY(-1px);box-shadow:0 3px 12px rgba(78,234,216,.18)}
 .chip .dot{width:10px;height:10px;border-radius:50%;flex:none;box-shadow:0 0 8px currentColor}
 .chip .n{font-family:var(--mono);color:var(--muted);font-size:11px;font-weight:600}
-.chip.off{opacity:.3;filter:grayscale(.85)}
+.chip.off{opacity:.55;filter:grayscale(.6)}
+.chip.off:hover{opacity:.85}
 .seg{display:flex;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(18,14,46,.5)}
 .seg button{flex:1;border:none;background:none;padding:9px 0;font-size:12.5px;font-weight:600;
   cursor:pointer;color:var(--muted);transition:all .15s}
@@ -852,7 +853,7 @@ select option{background:var(--card-solid)}
 #detail .notes{margin-top:10px;font-size:12px;color:#CFCBEF;line-height:1.55;
   background:rgba(18,14,46,.55);border-radius:10px;padding:10px 12px}
 #detail .coords{font-family:var(--mono);font-size:11px;color:var(--muted)}
-#foot{position:absolute;left:16px;bottom:0;z-index:1200;padding:5px 10px;font-size:10px;color:var(--muted)}
+#foot{position:absolute;left:130px;bottom:0;z-index:1200;padding:5px 10px;font-size:10px;color:var(--muted)}
 
 /* ---------- map ---------- */
 #map{position:absolute;inset:0;z-index:1;background:transparent}
@@ -1109,7 +1110,8 @@ Object.entries(CENTROIDS).forEach(([name,[la,lo]]) => {
     iconSize:[100,14], iconAnchor:[50,7]}), interactive:false, keyboard:false}).addTo(countyNames);
 });
 function countyNameVis(){
-  const want = map.getZoom() >= 7.5;
+  const z = map.getZoom();
+  const want = z >= 7.5 && z <= 11;   // hide at street zoom so labels never sit under markers
   if (want !== map.hasLayer(countyNames)) want ? map.addLayer(countyNames) : map.removeLayer(countyNames);
 }
 map.on('zoomend', countyNameVis); countyNameVis();
@@ -1183,7 +1185,7 @@ DATA.forEach((r,i) => {
 cluster.on('clusterclick', e => {
   const b = e.layer.getBounds();
   const spanM = b.getSouthWest().distanceTo(b.getNorthEast());
-  if (spanM > 900 && map.getZoom() < 15) { map.fitBounds(b.pad(0.2)); return; }
+  if (spanM > 900 && map.getZoom() < 15) { map.fitBounds(b.pad(0.2), {maxZoom: 12}); return; }
   const rows = e.layer.getAllChildMarkers().map(m => m._row).filter(Boolean)
     .sort((a, b2) => (a.entity_name||'').localeCompare(b2.entity_name||''));
   showClusterList(rows);
@@ -1286,6 +1288,11 @@ function apply(){
   document.querySelectorAll('#actChips .chip').forEach(ch => {
     ch.querySelector('.n').textContent = per[ch.dataset.act] || 0;
   });
+  const perTag = {};
+  lastFiltered.forEach(r => (r.tags||[]).forEach(t => perTag[t] = (perTag[t]||0)+1));
+  document.querySelectorAll('#tagChips .chip').forEach(ch => {
+    ch.querySelector('.n').textContent = perTag[ch.dataset.tag] || 0;
+  });
 }
 
 const chipBox = document.getElementById('actChips');
@@ -1380,7 +1387,7 @@ function goTo(r){
   showDetail(r);
   if (r._marker) {
     const ll = r._marker.getLatLng();
-    REDUCED ? map.setView(ll, 13) : map.flyTo(ll, 13, {duration:.7});
+    REDUCED ? map.setView(ll, 11) : map.flyTo(ll, 11, {duration:.7});
   }
   if (window.innerWidth <= 960) document.getElementById('sidebar').classList.add('hidden');
 }

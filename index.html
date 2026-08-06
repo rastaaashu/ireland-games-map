@@ -747,9 +747,8 @@ button,input,select{font-family:var(--sans);font-size:14px;color:var(--ink)}
   font-size:17px;color:var(--aqua);cursor:pointer}
 
 /* ---------- floating panel ---------- */
-body.moving #sidebar,body.moving #detail,body.moving #topbar{backdrop-filter:none}
 #sidebar{position:absolute;top:76px;left:16px;bottom:16px;width:404px;z-index:1300;display:flex;
-  flex-direction:column;background:var(--card);backdrop-filter:blur(8px);border:1.5px solid var(--line);
+  flex-direction:column;background:var(--card);border:1.5px solid var(--line);
   border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.45),var(--glow);overflow:hidden;
   transition:transform .3s cubic-bezier(.22,.9,.3,1),opacity .3s}
 #sidebar.hidden{transform:translateX(-440px);opacity:0;pointer-events:none}
@@ -832,7 +831,7 @@ select option{background:var(--card-solid)}
 
 /* ---------- floating detail card ---------- */
 #detail{position:absolute;right:16px;bottom:16px;width:400px;max-height:56vh;z-index:1300;overflow-y:auto;
-  background:var(--card);backdrop-filter:blur(8px);border:1.5px solid var(--line);border-radius:20px;
+  background:var(--card);border:1.5px solid var(--line);border-radius:20px;
   padding:16px 20px;box-shadow:0 10px 40px rgba(0,0,0,.5),var(--glow);
   transition:transform .3s cubic-bezier(.22,.9,.3,1),opacity .3s}
 #detail.hidden{transform:translateY(30px);opacity:0;pointer-events:none}
@@ -884,13 +883,12 @@ select option{background:var(--card-solid)}
 .ttcard .tags{margin:6px 0 0}
 .ttcard .cta{margin-top:7px;font-size:10.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:6px}
 .donut{border-radius:50%;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 18px rgba(78,234,216,.35),0 4px 14px rgba(0,0,0,.5);transition:transform .15s}
-.donut:hover{transform:scale(1.07)}
+  box-shadow:0 0 9px rgba(78,234,216,.3),0 2px 8px rgba(0,0,0,.45)}
 .donut .hole{background:#171243;border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-family:var(--mono);font-weight:800;color:var(--ink)}
 .name-label{background:none;border:none;box-shadow:none;pointer-events:none}
 .name-label div{font:600 11.5px var(--sans);color:#EAE8FF;white-space:nowrap;
-  text-shadow:0 1px 3px #120E2E,0 -1px 3px #120E2E,1px 0 3px #120E2E,-1px 0 3px #120E2E}
+  text-shadow:0 1px 3px #120E2E,0 0 5px #120E2E}
 .county-name{background:none;border:none;box-shadow:none;pointer-events:none}
 .county-name div{font:600 10px var(--disp);letter-spacing:2.2px;text-transform:uppercase;
   color:rgba(169,163,217,.65);white-space:nowrap}
@@ -1069,28 +1067,14 @@ function tagHtml(r, max){ return (r.tags && r.tags.length)
 function debounce(fn, ms){ let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
 /* ---------- constellation mesh ---------- */
-let meshPaused = false;
+/* constellation backdrop: drawn ONCE (static) - zero per-frame cost */
 (function mesh(){
-  if (REDUCED) return;
   const cv = document.getElementById('mesh'), cx = cv.getContext('2d');
-  let W, H, pts = [];
-  function size(){ W = cv.width = innerWidth; H = cv.height = innerHeight;
+  function draw(){
+    const W = cv.width = innerWidth, H = cv.height = innerHeight;
     const n = Math.min(70, Math.round(W * H / 30000));
-    pts = Array.from({length: n}, () => ({x: Math.random()*W, y: Math.random()*H,
-      vx: (Math.random()-.5)*.16, vy: (Math.random()-.5)*.16}));
-  }
-  size(); addEventListener('resize', debounce(size, 300));
-  let last = 0;
-  function frame(t){
-    requestAnimationFrame(frame);
-    if (document.hidden || meshPaused || t - last < 40) return;
-    last = t;
+    const pts = Array.from({length: n}, () => ({x: Math.random()*W, y: Math.random()*H}));
     cx.clearRect(0,0,W,H);
-    for (const p of pts){
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > W) p.vx *= -1;
-      if (p.y < 0 || p.y > H) p.vy *= -1;
-    }
     cx.strokeStyle = 'rgba(120,90,220,.14)'; cx.lineWidth = 1;
     for (let i = 0; i < pts.length; i++) for (let j = i+1; j < pts.length; j++){
       const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y, d2 = dx*dx+dy*dy;
@@ -1100,15 +1084,17 @@ let meshPaused = false;
     cx.globalAlpha = 1; cx.fillStyle = 'rgba(140,110,235,.5)';
     for (const p of pts){ cx.beginPath(); cx.arc(p.x, p.y, 1.4, 0, 7); cx.fill(); }
   }
-  requestAnimationFrame(frame);
+  draw(); addEventListener('resize', debounce(draw, 300));
 })();
 
 /* ---------- map ---------- */
 const map = L.map('map', {center: [53.5, -7.8], zoom: 7, preferCanvas: true, zoomControl: true,
   worldCopyJump: false, maxBounds: [[48.5,-13.5],[58.5,0.5]], minZoom: 5, maxZoom: 18,
   markerZoomAnimation: false, attributionControl: true});
-const canvas = L.canvas({padding: 0.5, tolerance: 7});   // forgiving hover hit-target on dots
-const atlasLayer = L.geoJSON(COUNTIES, {renderer: canvas, interactive: false,
+/* SEPARATE canvases: the heavy county polygons never repaint when dots restyle on hover */
+const canvasBase = L.canvas({padding: 0.5});
+const canvas = L.canvas({padding: 0.5, tolerance: 7});   // dots: forgiving hover hit-target
+const atlasLayer = L.geoJSON(COUNTIES, {renderer: canvasBase, interactive: false,
   style: {color:'rgba(78,234,216,.4)', weight:0.8, fillColor:'#241C5E', fillOpacity:1, opacity:1}
 }).addTo(map);
 const countyNames = L.layerGroup();
@@ -1130,9 +1116,9 @@ Object.entries(CITIES).forEach(([name,[la,lo]]) => {
     iconSize:[90,16], iconAnchor:[45,-8]}), interactive:false, keyboard:false}).addTo(cityLayer);
 });
 map.on('zoomend', countyNameVis); countyNameVis();
-// pause background mesh + drop panel blur while the map is moving (compositing cost)
-map.on('movestart zoomstart', () => { meshPaused = true; document.body.classList.add('moving'); });
-map.on('moveend zoomend', () => { meshPaused = false; document.body.classList.remove('moving'); });
+// flag map movement so hover restyles pause during drags
+map.on('movestart zoomstart', () => document.body.classList.add('moving'));
+map.on('moveend zoomend', () => document.body.classList.remove('moving'));
 L.control.scale({imperial:false, position:'bottomleft'}).addTo(map);
 document.getElementById('loading').remove();
 if (!REDUCED) document.body.classList.add('intro');
@@ -1192,7 +1178,7 @@ DATA.forEach((r,i) => {
   const m = L.circleMarker([r.latitude, r.longitude], {renderer: canvas, radius: 8.5, color: '#120E2E',
     weight: 2, fillColor: c, fillOpacity: 1});
   m.bindTooltip(() => ttHtml(r), {sticky: true, direction: 'top', offset: [0,-9], className: 'entity-tt'});
-  m.on('mouseover', () => m.setStyle({radius: 12, color: '#FFFFFF'}));
+  m.on('mouseover', () => { if (!document.body.classList.contains('moving')) m.setStyle({radius: 12, color: '#FFFFFF'}); });
   m.on('mouseout', () => m.setStyle({radius: 8.5, color: '#120E2E'}));
   m.on('click', () => showDetail(r));
   m._row = r;
@@ -1417,7 +1403,7 @@ function goTo(r){
   }
   if (window.innerWidth <= 960) document.getElementById('sidebar').classList.add('hidden');
 }
-searchEl.oninput = debounce(() => {
+searchEl.oninput = debounce(function runSearch(){
   state.q = searchEl.value.trim();
   apply();
   resultsEl.innerHTML = '';
@@ -1428,7 +1414,7 @@ searchEl.oninput = debounce(() => {
     d.onclick = () => goTo(r);
     resultsEl.appendChild(d);
   });
-}, 120);
+}, 180);
 
 /* ---------- index ---------- */
 const dirList = document.getElementById('dirList'), dirFilter = document.getElementById('dirFilter');
@@ -1439,29 +1425,29 @@ function buildDir(){
     (r.tags||[]).some(t => t.toLowerCase().includes(q)))
     .sort((a,b) => (a.entity_name||'').localeCompare(b.entity_name||''));
   document.getElementById('dirCount').textContent = `${rows.length} of ${DATA.length} entities`;
-  dirList.innerHTML = '';
-  let letter = '';
-  const frag = document.createDocumentFragment();
+  // one-string render + delegated events: hundreds of nodes in a single parse
+  let letter = '', html = '';
   rows.forEach(r => {
     const L0 = ((r.entity_name||'#')[0] || '#').toUpperCase();
-    if (L0 !== letter) {
-      letter = L0;
-      const h = document.createElement('div'); h.className = 'letter'; h.textContent = letter;
-      frag.appendChild(h);
-    }
-    const d = document.createElement('div'); d.className = 'dirrow'; d.tabIndex = 0;
+    if (L0 !== letter) { letter = L0; html += `<div class="letter">${letter}</div>`; }
     const c = COLOURS[r.games_activity] || '#9AA0B5';
-    d.innerHTML = `<span class="dot" style="background:${c};color:${c}"></span>
-      <span class="nm">${esc(r.entity_name)}</span>
-      <span class="loc">${esc(r.town||r.county||'—')}</span>
-      <span class="jd" style="background:${jurColor(r.jurisdiction)}">${esc(r.jurisdiction||'?')}</span>`;
-    d.onclick = () => goTo(r);
-    d.onkeydown = e => { if (e.key === 'Enter') goTo(r); };
-    frag.appendChild(d);
+    html += `<div class="dirrow" tabindex="0" data-id="${r._id}">`+
+      `<span class="dot" style="background:${c};color:${c}"></span>`+
+      `<span class="nm">${esc(r.entity_name)}</span>`+
+      `<span class="loc">${esc(r.town||r.county||'—')}</span>`+
+      `<span class="jd" style="background:${jurColor(r.jurisdiction)}">${esc(r.jurisdiction||'?')}</span></div>`;
   });
-  dirList.appendChild(frag);
+  dirList.innerHTML = html;
 }
-dirFilter.oninput = debounce(buildDir, 120);
+dirList.addEventListener('click', e => {
+  const row = e.target.closest('.dirrow');
+  if (row) goTo(DATA[+row.dataset.id]);
+});
+dirList.addEventListener('keydown', e => {
+  const row = e.target.closest('.dirrow');
+  if (row && e.key === 'Enter') goTo(DATA[+row.dataset.id]);
+});
+dirFilter.oninput = debounce(buildDir, 180);
 
 /* ---------- about ---------- */
 const srcTable = document.getElementById('srcTable');

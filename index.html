@@ -993,11 +993,12 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
 <div id="loading"><div class="pulse"></div><div class="txt">Loading atlas</div>
   <div id="cdnfail" style="display:none;max-width:420px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6;font-family:var(--sans);text-transform:none;letter-spacing:0">
   The map engine could not start. Reload the page; if this persists the file may be corrupted.</div></div>
+<form name="errlog" netlify netlify-honeypot="bot-field" hidden><input name="msg"><input name="bot-field"></form>
 <div id="app">
   <div id="topbar">
     <div id="logo">
       <div id="logomark"><span class="l1"></span><span class="l2"></span><span class="l3">IE</span></div>
-      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 07.1455</span></div>
+      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 07.1502</span></div>
     </div>
     <div id="tabs">
       <button data-tab="explore" class="on">Explore</button>
@@ -1015,9 +1016,9 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   </div>
 
   <div id="map"></div>
-  <button id="collapseBtn" title="Toggle panel" style="display:none">›</button>
+  <button id="collapseBtn" title="Toggle panel" style="display:block">›</button>
 
-  <div id="sidebar">
+  <div id="sidebar" class="hidden">
     <button id="viewMapBtn">View map</button>
     <div class="tabpane on" id="pane-explore">
       <div id="controls">
@@ -1115,6 +1116,7 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   if (b) b.onclick = toggle;
   if (c) c.onclick = toggle;
   if (v) v.onclick = toggle;
+  var reported = false;
   window.onerror = function(msg, src, line){
     var el = document.getElementById('errbar');
     if (!el) {
@@ -1124,6 +1126,16 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
       document.body.appendChild(el);
     }
     el.textContent = 'Error: ' + msg + ' @' + line + ' | ' + navigator.userAgent.slice(0, 80);
+    if (!reported) {
+      reported = true;
+      try {
+        var x = new XMLHttpRequest();
+        x.open('POST', '/', true);
+        x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        x.send('form-name=errlog&msg=' + encodeURIComponent(String(msg).slice(0, 300) +
+          ' @' + line + ' | ' + navigator.userAgent));
+      } catch (e) {}
+    }
   };
 })();
 </script>
@@ -1696,8 +1708,9 @@ try {
   map.once('movestart zoomstart', () => toast.classList.add('gone'));
 } catch (e) {}
 apply();
-// LAST: guarantee small screens and phones open on the map, whatever happened above
-if (window.innerWidth <= 1280 || isPhone()) setPanel(true);
+// LAST: the raw HTML ships with the tray hidden (map-first even if scripts die);
+// only wide non-touch desktops open it automatically
+setPanel(window.innerWidth <= 1280 || isPhone());
 </script>
 
 </body>

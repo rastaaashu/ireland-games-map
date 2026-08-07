@@ -972,7 +972,8 @@ select option{background:var(--card-solid)}
 body.mob #statsbar{display:none}
 body.mob #labchip{display:none}
 body.mob #burger{display:block}
-body.mob #wordmark span{display:none}
+body.mob #wordmark span{display:block;font-size:8px;letter-spacing:1px}
+#burger,#collapseBtn,#viewMapBtn{touch-action:manipulation;-webkit-tap-highlight-color:rgba(214,0,13,.2)}
 body.mob #wordmark b{font-size:13.5px}
 body.mob #topbar{gap:10px;padding:0 12px}
 body.mob #sidebar{top:70px;left:8px;right:8px;bottom:8px;width:auto;min-width:0;background:var(--card-solid)}
@@ -996,7 +997,7 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   <div id="topbar">
     <div id="logo">
       <div id="logomark"><span class="l1"></span><span class="l2"></span><span class="l3">IE</span></div>
-      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas</span></div>
+      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 07.1455</span></div>
     </div>
     <div id="tabs">
       <button data-tab="explore" class="on">Explore</button>

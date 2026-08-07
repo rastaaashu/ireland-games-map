@@ -984,6 +984,9 @@ body.mob #collapseBtn{top:78px;left:8px}
 body.mob #toast{left:8px;right:8px;transform:none;max-width:none}
 body.mob #foot{display:none}
 body.mob #map{left:0 !important}
+#viewMapBtn{display:none}
+body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;border-radius:10px;
+  background:var(--qred);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
 </style>
 <canvas id="mesh"></canvas>
 <div id="loading"><div class="pulse"></div><div class="txt">Loading atlas</div>
@@ -1014,6 +1017,7 @@ body.mob #map{left:0 !important}
   <button id="collapseBtn" title="Toggle panel" style="display:none">›</button>
 
   <div id="sidebar">
+    <button id="viewMapBtn">View map</button>
     <div class="tabpane on" id="pane-explore">
       <div id="controls">
         <input id="search" type="text" placeholder="Search names, towns, tech, notes…" autocomplete="off" aria-label="Search">
@@ -1092,6 +1096,36 @@ body.mob #map{left:0 !important}
   <div id="toast"></div>
   <div id="foot">Medialab, Queen's University Belfast. Public sources with per-row provenance. Rebuilt 2026-08-07.</div>
 </div>
+<script>
+/* survival layer: plain ES5, runs even if the main app crashes on this browser.
+   Guarantees the menu always toggles, and surfaces any script error on screen. */
+(function(){
+  function toggle(){
+    var sb = document.getElementById('sidebar');
+    var hidden = sb.className.indexOf('hidden') >= 0;
+    sb.className = hidden ? sb.className.replace(/\bhidden\b/g, '').replace(/\s+/g, ' ')
+                          : sb.className + ' hidden';
+    var cb = document.getElementById('collapseBtn');
+    if (cb) cb.style.display = hidden ? 'none' : 'block';
+  }
+  var b = document.getElementById('burger');
+  var c = document.getElementById('collapseBtn');
+  var v = document.getElementById('viewMapBtn');
+  if (b) b.onclick = toggle;
+  if (c) c.onclick = toggle;
+  if (v) v.onclick = toggle;
+  window.onerror = function(msg, src, line){
+    var el = document.getElementById('errbar');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'errbar';
+      el.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#B00020;color:#fff;font:12px monospace;padding:6px 10px;word-break:break-all';
+      document.body.appendChild(el);
+    }
+    el.textContent = 'Error: ' + msg + ' @' + line + ' | ' + navigator.userAgent.slice(0, 80);
+  };
+})();
+</script>
 <script>
 /* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1353,7 +1387,7 @@ function rebuildDensity(rows){
 
 /* ---------- filters ---------- */
 const allActs = [...new Set(DATA.map(r => r.games_activity || 'other'))];
-const allTags = [...new Set(DATA.flatMap(r => r.tags || []))];
+const allTags = [...new Set(DATA.reduce((a, r) => a.concat(r.tags || []), []))];
 const tagCounts = {};
 DATA.forEach(r => (r.tags||[]).forEach(t => tagCounts[t] = (tagCounts[t]||0)+1));
 const state = {acts: new Set(allActs), tag: null, jur: 'all', county: 'all', source: 'all', type: 'all', q: '', verifiedOnly: false};
@@ -1495,6 +1529,7 @@ document.getElementById('tabs').querySelectorAll('button').forEach(b => b.onclic
 });
 document.getElementById('burger').onclick = togglePanel;
 document.getElementById('collapseBtn').onclick = togglePanel;
+document.getElementById('viewMapBtn').onclick = () => setPanel(true);
 /* phone detection that survives desktop-site mode: any coarse-pointer device with a
    physically small screen is a phone, whatever viewport width it claims */
 function isPhone(){
@@ -1651,13 +1686,16 @@ document.getElementById('bsExact').textContent = nExact;
 document.getElementById('lsVerified').textContent = DATA.filter(r => r.loc_status === 'verified').length;
 document.getElementById('lsPending').textContent = DATA.filter(r => r.loc_status === 'exact_pending').length;
 document.getElementById('lsApprox').textContent = DATA.filter(r => r.loc_status === 'approx').length;
-const nUnplaced = DATA.filter(r => !r._marker).length;
-const toast = document.getElementById('toast');
-toast.innerHTML = `<b>${DATA.length}</b> entities from public sources. Hover a dot for details, click it for links.`;
-setTimeout(() => toast.classList.add('gone'), 9000);
-map.once('movestart zoomstart', () => toast.classList.add('gone'));
-if (window.innerWidth <= 1280 || isPhone()) setPanel(true);   // laptops and phones open with a clean full map
+try {
+  const nUnplaced = DATA.filter(r => !r._marker).length;
+  const toast = document.getElementById('toast');
+  toast.innerHTML = `<b>${DATA.length}</b> entities from public sources. Hover a dot for details, click it for links.`;
+  setTimeout(() => toast.classList.add('gone'), 9000);
+  map.once('movestart zoomstart', () => toast.classList.add('gone'));
+} catch (e) {}
 apply();
+// LAST: guarantee small screens and phones open on the map, whatever happened above
+if (window.innerWidth <= 1280 || isPhone()) setPanel(true);
 </script>
 
 </body>

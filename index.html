@@ -942,6 +942,22 @@ select option{background:var(--card-solid)}
   #sidebar{width:min(340px, calc(100vw - 32px))}
   #detail{width:min(340px, calc(100vw - 32px));max-height:48vh}
 }
+/* phones: logo + burger only in the bar; tabs live inside the slide-in panel (JS relocates) */
+@media (max-width:640px){
+  #statsbar{display:none}
+  #wordmark span{display:none}
+  #wordmark b{font-size:13.5px}
+  #topbar{gap:10px;padding:0 12px}
+  #sidebar{top:70px;left:8px;right:8px;bottom:8px;width:auto;min-width:0;background:var(--card-solid)}
+  #detail{background:var(--card-solid)}
+  #sidebar.hidden{transform:translateX(-110vw)}
+  #sidebar #tabs{display:flex;margin:0;padding:10px 12px 0;border-bottom:1px solid var(--line)}
+  #sidebar #tabs button{flex:1}
+  #detail{left:8px;right:8px;bottom:8px;width:auto;max-height:56vh}
+  #collapseBtn{top:78px;left:8px}
+  #toast{left:8px;right:8px;transform:none;max-width:none}
+  #foot{display:none}
+}
 </style>
 <canvas id="mesh"></canvas>
 <div id="loading"><div class="pulse"></div><div class="txt">Loading atlas</div>
@@ -1421,6 +1437,18 @@ document.getElementById('tabs').querySelectorAll('button').forEach(b => b.onclic
 });
 document.getElementById('burger').onclick = togglePanel;
 document.getElementById('collapseBtn').onclick = togglePanel;
+/* phones: the tab pills live inside the panel so the top bar stays one clean row */
+function relocateTabs(){
+  const tabs = document.getElementById('tabs');
+  const sb = document.getElementById('sidebar');
+  if (window.innerWidth <= 640) {
+    if (tabs.parentElement !== sb) sb.insertBefore(tabs, sb.firstChild);
+  } else if (tabs.parentElement !== document.getElementById('topbar')) {
+    document.getElementById('topbar').insertBefore(tabs, document.getElementById('statsbar'));
+  }
+}
+relocateTabs();
+addEventListener('resize', debounce(relocateTabs, 200));
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.getElementById('detailBody').innerHTML) detailClose.onclick();
 });

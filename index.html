@@ -1187,7 +1187,9 @@ if (!REDUCED) document.body.classList.add('intro');
 const donutCache = new Map();
 const cluster = L.markerClusterGroup({
   chunkedLoading: true, animate: false, animateAddingMarkers: false,
-  maxClusterRadius: 46, spiderfyOnMaxZoom: false, zoomToBoundsOnClick: false,
+  maxClusterRadius: z => z >= 13 ? 18 : 46,   // clusters dissolve as you approach street level
+  disableClusteringAtZoom: 14,                 // at z14+ every single point stands alone
+  spiderfyOnMaxZoom: false, zoomToBoundsOnClick: false,
   iconCreateFunction: c => {
     const kids = c.getAllChildMarkers();
     const n = kids.length;
@@ -1252,7 +1254,9 @@ DATA.forEach((r,i) => {
 cluster.on('clusterclick', e => {
   const b = e.layer.getBounds();
   const spanM = b.getSouthWest().distanceTo(b.getNorthEast());
-  if (spanM > 900 && map.getZoom() < 15) { map.fitBounds(b.pad(0.2), {maxZoom: 12}); return; }
+  // spread clusters always zoom apart (never capped below the decluster zoom);
+  // only truly coincident leftovers open as a list
+  if (spanM > 120 && map.getZoom() < 15) { map.fitBounds(b.pad(0.15), {maxZoom: 15}); return; }
   const rows = e.layer.getAllChildMarkers().map(m => m._row).filter(Boolean)
     .sort((a, b2) => (a.entity_name||'').localeCompare(b2.entity_name||''));
   showClusterList(rows);
@@ -1305,8 +1309,9 @@ function refreshLabels(){
     if (taken.has(cell)) continue;
     taken.add(cell);
     if (++added > 120) break;
+    const tick = r.loc_status === 'verified' ? '<b style="color:#D8F55A">✔ </b>' : '';
     L.marker(ll, {icon: L.divIcon({className:'name-label',
-      html:`<div>${esc(r.entity_name)}</div>`, iconAnchor:[-11,8]}), interactive:false, keyboard:false})
+      html:`<div>${tick}${esc(r.entity_name)}</div>`, iconAnchor:[-11,8]}), interactive:false, keyboard:false})
       .addTo(labelLayer);
   }
 }

@@ -871,9 +871,9 @@ select option{background:var(--card-solid)}
 
 /* ---------- map ---------- */
 #map{position:absolute;inset:0;z-index:1;background:transparent;transition:left .3s}
-/* desktop: the map owns the space BESIDE the panel, so the island never hides behind it */
-@media (min-width:1281px){
-  body:not(.panelhidden) #map{left:436px}
+/* desktop: whenever the panel is open, the map owns the space BESIDE it - no overlap */
+@media (min-width:961px){
+  body:not(.panelhidden):not(.mob) #map{left:436px}
 }
 .leaflet-container{background:transparent;font:inherit}
 .leaflet-overlay-pane path{cursor:pointer}
@@ -1191,7 +1191,7 @@ function debounce(fn, ms){ let t; return (...a) => { clearTimeout(t); t = setTim
 /* ---------- map ---------- */
 /* SVG rendering throughout: ~460 vector elements composite on the GPU during drags with zero
    repainting (canvas repainted pixels every frame - the source of the drag lag) */
-const map = L.map('map', {center: [53.5, -7.8], zoom: 7, zoomControl: true,
+const map = L.map('map', {center: [53.5, -7.8], zoom: 7, zoomControl: false,
   worldCopyJump: false, maxBounds: [[48.5,-13.5],[58.5,0.5]], minZoom: 5, maxZoom: 18,
   zoomSnap: 0.25, zoomDelta: 0.5, wheelPxPerZoomLevel: 80, wheelDebounceTime: 25,
   markerZoomAnimation: true, bounceAtZoomLimits: false,
@@ -1230,6 +1230,7 @@ map.on('zoomend', countyNameVis); countyNameVis();
 // flag map movement so hover restyles pause during drags
 map.on('movestart zoomstart', () => document.body.classList.add('moving'));
 map.on('moveend zoomend', () => document.body.classList.remove('moving'));
+L.control.zoom({position:'topright'}).addTo(map);   // right side: never under the panel or its buttons
 L.control.scale({imperial:false, position:'bottomleft'}).addTo(map);
 document.getElementById('loading').remove();
 if (!REDUCED) document.body.classList.add('intro');

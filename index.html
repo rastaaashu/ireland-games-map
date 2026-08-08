@@ -998,7 +998,7 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   <div id="topbar">
     <div id="logo">
       <div id="logomark"><span class="l1"></span><span class="l2"></span><span class="l3">IE</span></div>
-      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 07.1502</span></div>
+      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 08.0238</span></div>
     </div>
     <div id="tabs">
       <button data-tab="explore" class="on">Explore</button>
@@ -1043,6 +1043,7 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
           <div><h3>Map layers</h3><div id="togglerow">
             <label><input type="checkbox" id="namesChk"> Name labels</label>
             <label><input type="checkbox" id="densityChk"> County density</label>
+            <label><input type="checkbox" id="closedChk"> Show closed (historic)</label>
             <label><input type="checkbox" id="verifiedChk"> Verified locations only</label>
           </div></div>
         </div>
@@ -1096,7 +1097,7 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   <div id="detail" class="hidden"><button id="detailClose" aria-label="Close record">×</button>
     <div class="hint" id="detailHint" style="display:none"></div><div id="detailBody"></div></div>
   <div id="toast"></div>
-  <div id="foot">Medialab, Queen's University Belfast. Public sources with per-row provenance. Rebuilt 2026-08-07.</div>
+  <div id="foot">Medialab, Queen's University Belfast. Public sources with per-row provenance. Rebuilt 2026-08-08.</div>
 </div>
 <script>
 /* survival layer: plain ES5, runs even if the main app crashes on this browser.
@@ -1304,9 +1305,13 @@ DATA.forEach((r,i) => {
   r._id = i;
   if (r.latitude == null || r.longitude == null) return;
   const c = COLOURS[r.games_activity] || '#9AA0B5';
+  const closedRow = r.status === 'dissolved' || r.status === 'inactive';
   const ring = r.loc_status === 'verified' ? '#1A7F37' : '#FFFFFF';
-  const m = L.circleMarker([r.latitude, r.longitude], {radius: 9, color: ring,
-    weight: r.loc_status === 'verified' ? 3 : 2, fillColor: c, fillOpacity: 1});
+  const m = L.circleMarker([r.latitude, r.longitude], {radius: 9,
+    color: closedRow ? '#9AA5A9' : ring,
+    weight: r.loc_status === 'verified' && !closedRow ? 3 : 2,
+    fillColor: closedRow ? '#C7CDD0' : c, fillOpacity: closedRow ? 0.7 : 1,
+    dashArray: closedRow ? '3 3' : null});
   m.bindTooltip(() => ttHtml(r), {sticky: true, direction: 'top', offset: [0,-9], className: 'entity-tt'});
   m.on('mouseover', () => { if (!document.body.classList.contains('moving')) m.setStyle({radius: 12, color: '#1F2428'}); });
   m.on('mouseout', () => m.setStyle({radius: 9, color: ring}));
@@ -1404,12 +1409,14 @@ const allActs = [...new Set(DATA.map(r => r.games_activity || 'other'))];
 const allTags = [...new Set(DATA.reduce((a, r) => a.concat(r.tags || []), []))];
 const tagCounts = {};
 DATA.forEach(r => (r.tags||[]).forEach(t => tagCounts[t] = (tagCounts[t]||0)+1));
-const state = {acts: new Set(allActs), tag: null, jur: 'all', county: 'all', source: 'all', type: 'all', q: '', verifiedOnly: false};
+const state = {acts: new Set(allActs), tag: null, jur: 'all', county: 'all', source: 'all', type: 'all', q: '', verifiedOnly: false, showClosed: false};
+function isClosed(r){ return r.status === 'dissolved' || r.status === 'inactive'; }
 let lastFiltered = DATA;
 
 function filtered(){
   const q = state.q.toLowerCase();
   return DATA.filter(r =>
+    (state.showClosed || !isClosed(r)) &&
     state.acts.has(r.games_activity || 'other') &&
     (!state.tag || (r.tags||[]).includes(state.tag)) &&
     (state.jur === 'all' || r.jurisdiction === state.jur) &&
@@ -1508,6 +1515,7 @@ sourceSel.onchange = () => { state.source = sourceSel.value; apply(); };
 document.getElementById('typeSel').onchange = e => { state.type = e.target.value; apply(); };
 document.getElementById('namesChk').onchange = refreshLabels;
 document.getElementById('verifiedChk').onchange = e => { state.verifiedOnly = e.target.checked; apply(); };
+document.getElementById('closedChk').onchange = e => { state.showClosed = e.target.checked; apply(); };
 document.getElementById('densityChk').onchange = e => {
   if (e.target.checked) { rebuildDensity(lastFiltered); map.addLayer(densityLayer); }
   else map.removeLayer(densityLayer);
@@ -1667,6 +1675,7 @@ function showDetail(r){
       <span class="badge" style="background:${c}">${esc(r.games_activity||'?')}</span>
       <span class="badge gray">${esc(r.entity_type||'?')}</span>
       ${r.jurisdiction?`<span class="badge mono" style="background:${jurColor(r.jurisdiction)}">${r.jurisdiction}</span>`:''}
+      ${isClosed(r)?`<span class="badge" style="background:#5F6368">${r.status === 'dissolved' ? 'DISSOLVED' : 'CLOSED'}</span>`:''}
     </div>
     ${tagHtml(r, 6)}
     <table>${rows}</table>

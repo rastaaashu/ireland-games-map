@@ -7,9 +7,8 @@
 <body>
 
 <title>Island of Ireland Games Industry Map</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+<!-- No runtime network requests: the file must render identically offline, from a USB stick,
+     and inside the claude.ai artifact sandbox. System font stacks are used throughout. -->
 <style>
 /* required styles */
 
@@ -712,8 +711,9 @@ button,input,select{font-family:var(--sans);font-size:14px;color:var(--ink)}
 ::-webkit-scrollbar-thumb{background:rgba(78,234,216,.25);border-radius:99px}
 ::-webkit-scrollbar-thumb:hover{background:rgba(78,234,216,.45)}
 
-#mesh{display:none}
-#app{position:relative;height:100vh;overflow:hidden;z-index:1}
+/* 100dvh tracks the visible viewport when a mobile browser's address bar shows or hides;
+   100vh is the static fallback for engines without dvh. */
+#app{position:relative;height:100vh;height:100dvh;overflow:hidden;z-index:1}
 
 /* ---------- top bar ---------- */
 #topbar{position:absolute;top:0;left:0;right:0;height:62px;z-index:1400;display:flex;align-items:center;
@@ -927,17 +927,19 @@ select option{background:var(--card-solid)}
 #loading .txt{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--ink);text-transform:uppercase}
 @keyframes pulse{0%,100%{transform:scale(.6);opacity:.5}50%{transform:scale(1.2);opacity:1}}
 
-/* intro */
+/* intro. Only elements whose visibility is NOT controlled by application state may be
+   animated here. An animation with fill-mode "both" outranks ordinary declarations in the
+   cascade, so animating #sidebar or #detail pinned them at their final keyframe
+   (transform:none; opacity:1) and defeated their own .hidden rule. On phones that left an
+   opaque tray covering the map which no toggle could dismiss, while pointer-events:none sent
+   taps through to a map the user could not see (audit PACKET 001, finding A1). It never
+   reproduced in the headless test because headless Chrome reports prefers-reduced-motion:
+   reduce, and .intro is only added when motion is allowed. */
 .intro #topbar{animation:dropIn .5s cubic-bezier(.22,.9,.3,1) both}
-.intro #sidebar{animation:slideIn .55s .12s cubic-bezier(.22,.9,.3,1) both}
-.intro #detail{animation:riseIn .55s .24s cubic-bezier(.22,.9,.3,1) both}
 @keyframes dropIn{from{transform:translateY(-70px);opacity:0}to{transform:none;opacity:1}}
-@keyframes slideIn{from{transform:translateX(-60px);opacity:0}to{transform:none;opacity:1}}
-@keyframes riseIn{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 
 @media (prefers-reduced-motion: reduce){
   *{animation:none!important;transition:none!important}
-  #mesh{display:none}
 }
 @media (pointer:coarse){
   #detailClose{width:42px;height:42px;font-size:18px}
@@ -976,7 +978,15 @@ body.mob #wordmark span{display:block;font-size:8px;letter-spacing:1px}
 #burger,#collapseBtn,#viewMapBtn{touch-action:manipulation;-webkit-tap-highlight-color:rgba(214,0,13,.2)}
 body.mob #wordmark b{font-size:13.5px}
 body.mob #topbar{gap:10px;padding:0 12px}
-body.mob #sidebar{top:70px;left:8px;right:8px;bottom:8px;width:auto;min-width:0;background:var(--card-solid)}
+/* safe-area insets keep the panel and its controls clear of a notch, a home indicator and
+   the rounded corners of a phone screen */
+body.mob #topbar{padding-left:max(12px, env(safe-area-inset-left));
+  padding-right:max(12px, env(safe-area-inset-right))}
+body.mob #sidebar{top:70px;width:auto;min-width:0;background:var(--card-solid);
+  left:max(8px, env(safe-area-inset-left));right:max(8px, env(safe-area-inset-right));
+  bottom:max(8px, env(safe-area-inset-bottom))}
+body.mob #burger,body.mob #collapseBtn{min-width:44px;min-height:44px}
+body.mob #detailClose{min-width:44px;min-height:44px}
 body.mob #sidebar.hidden{transform:translateX(-110vw)}
 body.mob #sidebar #tabs{display:flex;margin:0;padding:10px 12px 0;border-bottom:1px solid var(--line)}
 body.mob #sidebar #tabs button{flex:1}
@@ -989,16 +999,14 @@ body.mob #map{left:0 !important}
 body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;border-radius:10px;
   background:var(--qred);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
 </style>
-<canvas id="mesh"></canvas>
 <div id="loading"><div class="pulse"></div><div class="txt">Loading atlas</div>
   <div id="cdnfail" style="display:none;max-width:420px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6;font-family:var(--sans);text-transform:none;letter-spacing:0">
   The map engine could not start. Reload the page; if this persists the file may be corrupted.</div></div>
-<form name="errlog" netlify netlify-honeypot="bot-field" hidden><input name="msg"><input name="bot-field"></form>
 <div id="app">
   <div id="topbar">
     <div id="logo">
       <div id="logomark"><span class="l1"></span><span class="l2"></span><span class="l3">IE</span></div>
-      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 08.1503</span></div>
+      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 15.0604</span></div>
     </div>
     <div id="tabs">
       <button data-tab="explore" class="on">Explore</button>
@@ -1097,7 +1105,7 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   <div id="detail" class="hidden"><button id="detailClose" aria-label="Close record">×</button>
     <div class="hint" id="detailHint" style="display:none"></div><div id="detailBody"></div></div>
   <div id="toast"></div>
-  <div id="foot">Medialab, Queen's University Belfast. Public sources with per-row provenance. Rebuilt 2026-08-08.</div>
+  <div id="foot">Medialab, Queen's University Belfast. Public sources with per-row provenance. Rebuilt 2026-09-15.</div>
 </div>
 <script>
 /* survival layer: plain ES5, runs even if the main app crashes on this browser.
@@ -1117,27 +1125,48 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   if (b) b.onclick = toggle;
   if (c) c.onclick = toggle;
   if (v) v.onclick = toggle;
-  var reported = false;
-  window.onerror = function(msg, src, line){
+  /* The loading panel is a fixed, full-screen element above everything else. If startup dies
+     before it is removed, the page looks like a tray that will not close and nothing beneath
+     it can be reached. Never let that outlive startup: clear it on error, and clear it on a
+     timer even if no error was raised (a browser that runs out of memory parsing a 1 MB file
+     may simply stop without throwing). window.dropLoader is called again on success. */
+  window.dropLoader = function(){
+    var l = document.getElementById('loading');
+    if (l && l.parentNode) l.parentNode.removeChild(l);
+  };
+  window.showFatal = function(text){
+    window.dropLoader();
     var el = document.getElementById('errbar');
     if (!el) {
       el = document.createElement('div');
       el.id = 'errbar';
-      el.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#B00020;color:#fff;font:12px monospace;padding:6px 10px;word-break:break-all';
+      el.setAttribute('role', 'alert');
+      el.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#B00020;' +
+        'color:#fff;font:12px/1.5 monospace;padding:8px 40px 8px 12px;word-break:break-word';
+      var x = document.createElement('button');
+      x.textContent = 'x';
+      x.setAttribute('aria-label', 'Dismiss error');
+      x.style.cssText = 'position:absolute;top:4px;right:6px;width:28px;height:28px;border:0;' +
+        'background:transparent;color:#fff;font:16px monospace;cursor:pointer';
+      x.onclick = function(){ el.parentNode.removeChild(el); };
+      el.appendChild(x);
+      var span = document.createElement('span');
+      span.id = 'errtext';
+      el.appendChild(span);
       document.body.appendChild(el);
     }
-    el.textContent = 'Error: ' + msg + ' @' + line + ' | ' + navigator.userAgent.slice(0, 80);
-    if (!reported) {
-      reported = true;
-      try {
-        var x = new XMLHttpRequest();
-        x.open('POST', '/', true);
-        x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        x.send('form-name=errlog&msg=' + encodeURIComponent(String(msg).slice(0, 300) +
-          ' @' + line + ' | ' + navigator.userAgent));
-      } catch (e) {}
-    }
+    document.getElementById('errtext').textContent = text;
   };
+  window.onerror = function(msg, src, line){
+    window.showFatal('This page hit an error and may be incomplete: ' + msg + ' (line ' + line + ')');
+  };
+  setTimeout(function(){
+    var l = document.getElementById('loading');
+    if (l) {
+      window.showFatal('The atlas took too long to start on this device and may be incomplete. ' +
+        'The map and menu below are still usable.');
+    }
+  }, 12000);
 })();
 </script>
 <script>
@@ -1181,26 +1210,9 @@ function tagHtml(r, max){ return (r.tags && r.tags.length)
   ? `<div class="tags">${r.tags.slice(0, max).map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''; }
 function debounce(fn, ms){ let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
-/* ---------- constellation mesh ---------- */
-/* constellation backdrop: drawn ONCE (static) - zero per-frame cost */
-(function mesh(){
-  const cv = document.getElementById('mesh'), cx = cv.getContext('2d');
-  function draw(){
-    const W = cv.width = innerWidth, H = cv.height = innerHeight;
-    const n = Math.min(70, Math.round(W * H / 30000));
-    const pts = Array.from({length: n}, () => ({x: Math.random()*W, y: Math.random()*H}));
-    cx.clearRect(0,0,W,H);
-    cx.strokeStyle = 'rgba(120,90,220,.14)'; cx.lineWidth = 1;
-    for (let i = 0; i < pts.length; i++) for (let j = i+1; j < pts.length; j++){
-      const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y, d2 = dx*dx+dy*dy;
-      if (d2 < 16900){ cx.globalAlpha = 1 - d2/16900; cx.beginPath();
-        cx.moveTo(pts[i].x, pts[i].y); cx.lineTo(pts[j].x, pts[j].y); cx.stroke(); }
-    }
-    cx.globalAlpha = 1; cx.fillStyle = 'rgba(140,110,235,.5)';
-    for (const p of pts){ cx.beginPath(); cx.arc(p.x, p.y, 1.4, 0, 7); cx.fill(); }
-  }
-  draw(); addEventListener('resize', debounce(draw, 300));
-})();
+/* The constellation backdrop canvas was removed with the dark theme. It had been display:none
+   since the institutional light redesign, so it cost a full canvas allocation and a resize
+   listener on every device for nothing (audit PACKET 001, finding B5). */
 
 /* ---------- map ---------- */
 /* SVG rendering throughout: ~460 vector elements composite on the GPU during drags with zero
@@ -1246,7 +1258,7 @@ map.on('movestart zoomstart', () => document.body.classList.add('moving'));
 map.on('moveend zoomend', () => document.body.classList.remove('moving'));
 L.control.zoom({position:'topright'}).addTo(map);   // right side: never under the panel or its buttons
 L.control.scale({imperial:false, position:'bottomleft'}).addTo(map);
-document.getElementById('loading').remove();
+window.dropLoader();
 if (!REDUCED) document.body.classList.add('intro');
 
 /* donut clusters, memoised by composition */

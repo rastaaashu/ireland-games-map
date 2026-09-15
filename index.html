@@ -1015,7 +1015,7 @@ body.mob #viewMapBtn{display:block;margin:10px 12px 0;padding:12px;border:none;b
   <div id="topbar">
     <div id="logo">
       <div id="logomark"><span class="l1"></span><span class="l2"></span><span class="l3">IE</span></div>
-      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 15.0711</span></div>
+      <div id="wordmark"><b>Island of Ireland Games Industry Map</b><span>Games technology atlas · build 15.0742</span></div>
     </div>
     <div id="tabs" role="tablist" aria-label="Atlas sections">
       <button id="tab-explore" role="tab" aria-controls="pane-explore" aria-selected="true" tabindex="0" data-tab="explore" class="on">Explore</button>
@@ -1308,6 +1308,8 @@ map.on('zoomend', countyNameVis); countyNameVis();
 // flag map movement so hover restyles pause during drags
 map.on('movestart zoomstart', () => document.body.classList.add('moving'));
 map.on('moveend zoomend', () => document.body.classList.remove('moving'));
+// clustering rebuilds marker icons on every move, so the tab order has to be re-flattened
+map.on('moveend zoomend layeradd', () => { if (typeof untabMap === 'function') untabMap(); });
 L.control.zoom({position:'topright'}).addTo(map);   // right side: never under the panel or its buttons
 L.control.scale({imperial:false, position:'bottomleft'}).addTo(map);
 window.dropLoader();
@@ -1376,7 +1378,11 @@ DATA.forEach((r,i) => {
     weight: r.loc_status === 'verified' && !closedRow ? 3 : 2,
     fillColor: closedRow ? '#C7CDD0' : c, fillOpacity: closedRow ? 0.7 : 1,
     dashArray: closedRow ? '3 3' : null};
-  const m = L.circleMarker([r.latitude, r.longitude], baseStyle);
+  // keyboard:false keeps the marker out of the tab order. With hundreds of markers, Tab from
+  // the top bar walked every dot and never reached the panel controls, which made the keyboard
+  // route to the data unusable. The A to Z index is the keyboard route to a record, and it
+  // reaches the entities with no position too, which tabbing the map never could.
+  const m = L.circleMarker([r.latitude, r.longitude], {...baseStyle, keyboard: false});
   m.bindTooltip(() => ttHtml(r), {sticky: true, direction: 'top', offset: [0,-9], className: 'entity-tt'});
   m.on('mouseover', () => { if (!document.body.classList.contains('moving')) m.setStyle({radius: 12, color: '#1F2428'}); });
   m.on('mouseout', () => m.setStyle(baseStyle));
@@ -1531,6 +1537,7 @@ function apply(){
   if (state.density) { rebuildDensity(lastFiltered); map.addLayer(densityLayer); }
   else { map.removeLayer(densityLayer); densityLayer.clearLayers(); }
   refreshLabels();
+  untabMap();
 }
 // All controls and counts render from state, including reset and shortcut paths.
 function renderControls(){
@@ -1624,12 +1631,31 @@ document.getElementById('resetBtn').onclick = () => {
   document.getElementById('dirFilter').value = '';
   if (dirBuilt) buildDir();
   apply();
-  // map.stop() first: a flyTo or zoom animation still in flight finishes AFTER this call and
-  // silently puts the view back where the user was, so reset appeared to restore the filters
-  // and not the map. animate:false keeps the restored view from being overridden in turn.
-  map.stop();
-  map.setView([53.5, -7.8], 7, {animate: false});
+  restoreView();
 };
+/* A flyTo still in flight when reset is pressed finishes afterwards and silently puts the map
+   back where the user was, so reset appeared to restore the filters and not the map. Measured:
+   pressing reset 150 ms into a 700 ms fly left the map at the fly's destination. map.stop()
+   alone is not enough, because stopping snaps to the animation's target zoom and a queued frame
+   can still land after the setView. Set the view, then set it again on the next frame and once
+   more after the longest fly could have completed. */
+/* Leaflet puts every interactive vector path and every marker icon into the tab order. With
+   hundreds of dots that makes the keyboard unusable: measured, Tab from the top bar walked the
+   map container, then the county paths, then marker after marker, and never reached the panel.
+   The map container itself stays tabbable, so arrow-key panning still works; everything inside
+   it is taken out of the sequence, and the A to Z index remains the keyboard route to a record,
+   which also reaches the entities that have no position at all. */
+function untabMap(){
+  document.querySelectorAll('#map [tabindex="0"]').forEach(el => {
+    if (el.id !== 'map' && !el.classList.contains('leaflet-container')) el.tabIndex = -1;
+  });
+}
+function restoreView(){
+  const put = () => { map.stop(); map.setView([53.5, -7.8], 7, {animate: false}); };
+  put();
+  requestAnimationFrame(put);
+  setTimeout(put, 800);
+}
 
 /* ---------- tabs & panel ---------- */
 let dirBuilt = false;
@@ -1656,7 +1682,16 @@ function setPanel(hidden, moveFocus = true){
       t.focus({preventScroll:true});
       return document.activeElement === t;
     };
-    if (!focusIn()) requestAnimationFrame(focusIn);
+    /* Clearing `inert` does not make the subtree focusable within the same task in every
+       engine, and one animation frame is not always enough either: measured on a phone
+       viewport, focus stayed on the menu button through both attempts while the very same
+       focus() call succeeded a moment later. Retry on a short ladder and stop as soon as it
+       takes. */
+    if (!focusIn()) {
+      let tries = 0;
+      const again = () => { if (focusIn() || ++tries > 10) return; setTimeout(again, 60); };
+      requestAnimationFrame(again);
+    }
   }
   setTimeout(() => map.invalidateSize({pan: false}), 320);
 }
@@ -1867,6 +1902,17 @@ try {
 apply();
 // LAST: the raw HTML ships with the tray hidden (map-first even if scripts die);
 // only wide non-touch desktops open it automatically
+/* LAST: take the panel controls back from the pre-Leaflet survival layer.
+   That layer binds its own ES5 toggle so the menu still works if the main script dies, and it
+   is bound before this script runs. Measured on a phone viewport, it was still the live
+   handler at the end of startup, so opening the panel by keyboard left focus on the menu
+   button instead of moving it into the panel. Rebinding here, after every other handler is in
+   place, makes the accessible implementation authoritative while keeping the survival layer as
+   the fallback it was written to be. */
+document.getElementById('burger').onclick = togglePanel;
+document.getElementById('collapseBtn').onclick = togglePanel;
+document.getElementById('viewMapBtn').onclick = () => setPanel(true);
+
 setPanel(window.innerWidth <= 1280 || isPhone(), false);
 </script>
 

@@ -1,0 +1,216 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 5 /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 3348 >>
+stream
+BT /F2 9 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 791 Tm (QUB MEDIALAB | IRELAND GAMES MAP | GUIDE 1) Tj ET
+0.62 0.10 0.08 RG 0.8 w 54 777 m 541 777 l S
+BT /F2 23 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 744 Tm (Managing the map) Tj ET
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 704 Tm (For Dr Darragh Lydon, QUB MediaLab, and Aashutosh. Prepared 26 October 2026 for handover by Monday 2) Tj ET
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 691 Tm (November 2026.) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 670 Tm (1. Open the administrator page) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 643 Tm (Open https://rastaaashu.github.io/ireland-games-map/admin.html after Aashutosh has completed) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 629 Tm (setup and published this update. You can also open the map's About tab and choose Manage) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 615 Tm (entries. The administrator page needs an internet connection. A message saying the live) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 601 Tm (service is not configured means setup is still pending.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 580 Tm (Use your own account. Aashutosh creates it and gives you its initial password privately. Keep) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 566 Tm (the password in a password manager. Do not put it in a shared document or email it to a group.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 552 Tm (No commands are needed for everyday editing.) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 525 Tm (2. Log in and change your password) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 498 Tm (Enter your email address and password, then choose Log in. A successful login opens the entry) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 484 Tm (list. Only approved administrators can use the editing controls.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 463 Tm (To choose your own password or recover a forgotten one, enter your email address and choose) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 449 Tm (Email me a password reset link. Open the latest reset email, follow its link and enter the new) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 435 Tm (password twice. Use at least 14 characters. Log in again afterwards. Check spam if the email) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 421 Tm (does not appear. Contact Aashutosh if a reset email does not arrive or the link has expired.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 407 Tm (Email delivery must be checked during setup.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 386 Tm (The page logs you out after 15 minutes without activity or when the login expires, at most one) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 372 Tm (hour. Unsaved work is discarded at that point. Refreshing or closing the page also ends the) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 358 Tm (local session. Save before leaving, then use Log out on shared computers. Aashutosh can remove) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 344 Tm (administrator access if an account is lost.) Tj ET
+0.73 0.77 0.75 RG 0.8 w 54 52 m 541 52 l S
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 36 Tm (Administrator guide | 26 October 2026) Tj ET
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 516 36 Tm (1 / 5) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 4885 >>
+stream
+BT /F2 9 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 791 Tm (QUB MEDIALAB | IRELAND GAMES MAP | GUIDE 2) Tj ET
+0.62 0.10 0.08 RG 0.8 w 54 777 m 541 777 l S
+BT /F2 23 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 744 Tm (Adding and correcting entries) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 704 Tm (3. Find and correct an entry) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 677 Tm (Type its name, town or county in Find an entry. Choose Edit beside the correct entry. The list) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 663 Tm (includes hidden entries and entries that cannot currently appear publicly.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 642 Tm (Change the relevant fields. For example, to correct a town, check the organisation's published) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 628 Tm (address, correct the town and county, and update the public evidence link and date checked.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 614 Tm (Explain the correction in Why are you adding or changing this entry? Do not guess unknown) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 600 Tm (details.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 579 Tm (The website field is optional if a public evidence page is provided. The evidence page, source) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 565 Tm (description, date checked, name, kind of entry and activity are required. Select the main) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 551 Tm (activity from the dropdown. Select Unknown when lifecycle status is not evidenced. A broken) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 537 Tm (website does not prove closure. Use Dissolved only with registry evidence.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 516 Tm (Check the public-information confirmation and choose Save entry. Wait for the saved message. A) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 502 Tm (saved change goes straight to the live store. Visitors loading or refreshing the live map use) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 488 Tm (the current data. An already open map in another tab of your browser also reloads after a) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 474 Tm (save. People using another browser need to refresh their map.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 453 Tm (If someone else changed the entry while you were editing, the page refuses to overwrite their) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 439 Tm (work. Cancel, refresh the entry list, reopen it, then apply your correction to the current) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 425 Tm (version. If a connection fails during a save, refresh the list and check the history before) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 411 Tm (saving again: the first save may already have reached the service.) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 384 Tm (4. Add an entry) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 357 Tm (Choose Add an entry. First search for an existing entry to avoid duplicates. Use the public) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 343 Tm (display name and the kind of entry: Company, Organisation/course/group, or Individual) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 329 Tm (practitioner. Choose the primary games activity. Supply a public evidence page and describe) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 315 Tm (where the information comes from.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 294 Tm (Enter only facts supported by the evidence. Unknown fields can remain blank. The date checked) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 280 Tm (starts with today's date; correct it if your evidence was checked on another day. A new entry) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 266 Tm (starts without display permission. Check that permission only after completing the checks in) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 252 Tm (section 7. Explain the evidence and permission basis in the reason field, without private) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 238 Tm (contact details.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 217 Tm (Check the public-information confirmation, then choose Save entry. The visibility message) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 203 Tm (above Save tells you whether the entry will be public, hidden or excluded. A new entry with no) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 189 Tm (coordinates still appears in the public map's Index when its other publication conditions are) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 175 Tm (met.) Tj ET
+0.73 0.77 0.75 RG 0.8 w 54 52 m 541 52 l S
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 36 Tm (Administrator guide | 26 October 2026) Tj ET
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 516 36 Tm (2 / 5) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 3313 >>
+stream
+BT /F2 9 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 791 Tm (QUB MEDIALAB | IRELAND GAMES MAP | GUIDE 3) Tj ET
+0.62 0.10 0.08 RG 0.8 w 54 777 m 541 777 l S
+BT /F2 23 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 744 Tm (Locations and visibility) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 704 Tm (5. Set or correct a location) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 677 Tm (Open Set or correct the map position. Choose Find on map, then click the location on the map.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 663 Tm (Use the plus and minus buttons to zoom. You can instead type latitude and longitude, including) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 649 Tm (by keyboard. The bundled overview has limited street detail; use public evidence to obtain a) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 635 Tm (more precise position if needed.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 614 Tm (A clicked point starts as an approximate town area. Change What does this position represent?) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 600 Tm (only when evidence supports that precision. Address and postcode geocodes are still awaiting) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 586 Tm (verification. A map click does not create a verified badge. Do not place a pin by guessing a) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 572 Tm (private address. Choose Leave this entry without a map pin when the position is unknown.) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 545 Tm (6. Hide, restore and inspect history) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 518 Tm (Choose Hide beside an entry and give a short public-information reason. Hiding preserves the) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 504 Tm (record and its history while removing it from new live map requests. It is suitable for a) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 490 Tm (disputed or incorrect listing while it is checked. Closure is different: use the lifecycle) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 476 Tm (status, since the map has a historic filter.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 455 Tm (To bring a hidden entry back, choose Restore and explain why. Restoration removes the hidden) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 441 Tm (flag. Display permission, sufficient relevance and primary-record status must still allow) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 427 Tm (publication. Check the resulting label and the public map.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 406 Tm (Choose Change history to see when an entry changed, the reason and the account ID responsible.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 392 Tm (Expand See before and after to inspect the saved values. History is created automatically and) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 378 Tm (cannot be edited through the administrator page. Aashutosh can identify the account owner from) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 364 Tm (the account ID. Earlier notes remain in the evidence trail.) Tj ET
+0.73 0.77 0.75 RG 0.8 w 54 52 m 541 52 l S
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 36 Tm (Administrator guide | 26 October 2026) Tj ET
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 516 36 Tm (3 / 5) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 3021 >>
+stream
+BT /F2 9 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 791 Tm (QUB MEDIALAB | IRELAND GAMES MAP | GUIDE 4) Tj ET
+0.62 0.10 0.08 RG 0.8 w 54 777 m 541 777 l S
+BT /F2 23 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 744 Tm (Permission and privacy) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 704 Tm (7. Public information and permission) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 677 Tm (Every entry must have a traceable source: a source description, a public web page and the date) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 663 Tm (it was checked. Prefer the organisation's own site, a registry, a university or a recognised) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 649 Tm (sector directory. Do not use LinkedIn. Do not invent addresses, dates, categories, headcounts) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 635 Tm (or source links.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 614 Tm (Display permission means there is a checked basis for showing these details publicly. For an) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 600 Tm (individual practitioner, obtain explicit permission for the public display name and) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 586 Tm (information being shown. Public availability alone is not that person's permission. Keep the) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 572 Tm (private permission correspondence in the project's approved private records, outside this) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 558 Tm (administrator page. Record only a brief non-confidential basis in the reason. Follow the) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 544 Tm (project's agreed public-source basis for organisations.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 523 Tm (Never enter contact email addresses, private phone numbers, a person's home address,) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 509 Tm (passwords, private correspondence or confidential notes. This applies to every field,) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 495 Tm (including evidence notes, web links and change reasons. There is no private contact field in) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 481 Tm (this system. The automatic email check is an extra safeguard, not a substitute for reviewing) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 467 Tm (what you enter.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 446 Tm (If permission is withdrawn, uncheck display permission, save the reason and hide the entry if) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 432 Tm (appropriate. Tell Aashutosh promptly so the bundled offline copy and any exports can also be) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 418 Tm (replaced. A saved live change cannot recall copies somebody already downloaded.) Tj ET
+0.73 0.77 0.75 RG 0.8 w 54 52 m 541 52 l S
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 36 Tm (Administrator guide | 26 October 2026) Tj ET
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 516 36 Tm (4 / 5) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 2397 >>
+stream
+BT /F2 9 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 791 Tm (QUB MEDIALAB | IRELAND GAMES MAP | GUIDE 5) Tj ET
+0.62 0.10 0.08 RG 0.8 w 54 777 m 541 777 l S
+BT /F2 23 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 744 Tm (Help and project contacts) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 704 Tm (8. If the map is using an old copy) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 677 Tm (The public map contains a bundled snapshot so it can open during an outage. A snapshot warning) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 663 Tm (shows its build date. This copy may still contain an entry that has since been hidden or) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 649 Tm (corrected. The administrator page never saves into that old copy. When the live service) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 635 Tm (returns, reloading the map fetches current entries.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 614 Tm (For an urgent privacy correction, contact Aashutosh and request removal from the bundled copy) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 600 Tm (and exports as well as the live store. Aashutosh manages those published files. Do not treat) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 586 Tm (an offline snapshot as confirmation that a live save failed.) Tj ET
+BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 559 Tm (9. Who to contact) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 532 Tm (Aashutosh is the founder and technical maintainer responsible for accounts, source questions,) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 518 Tm (privacy corrections, service configuration and publishing. Use the established project contact) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 504 Tm (channel; this guide does not guess an email address. Dr Darragh Lydon is the QUB MediaLab) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 490 Tm (collaborator receiving this handover. If access is unavailable, record the correction) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 476 Tm (privately and send it to Aashutosh through the agreed channel. Never share your password to) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 462 Tm (get help.) Tj ET
+0.73 0.77 0.75 RG 0.8 w 54 52 m 541 52 l S
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 36 Tm (Administrator guide | 26 October 2026) Tj ET
+BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 516 36 Tm (5 / 5) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+xref
+0 15
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000148 00000 n 
+0000000218 00000 n 
+0000000293 00000 n 
+0000003693 00000 n 
+0000003835 00000 n 
+0000008772 00000 n 
+0000008914 00000 n 
+0000012279 00000 n 
+0000012422 00000 n 
+0000015496 00000 n 
+0000015640 00000 n 
+0000018090 00000 n 
+trailer
+<< /Size 15 /Root 1 0 R >>
+startxref
+18234
+%%EOF

@@ -13,7 +13,7 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
 endobj
 5 0 obj
-<< /Length 3348 >>
+<< /Length 3340 >>
 stream
 BT /F2 9 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 791 Tm (QUB MEDIALAB | IRELAND GAMES MAP | GUIDE 1) Tj ET
 0.62 0.10 0.08 RG 0.8 w 54 777 m 541 777 l S
@@ -21,10 +21,10 @@ BT /F2 23 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 744 Tm (Managing the map) Tj ET
 BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 704 Tm (For Dr Darragh Lydon, QUB MediaLab, and Aashutosh. Prepared 26 October 2026 for handover by Monday 2) Tj ET
 BT /F1 9 Tf 0.30 0.35 0.32 rg 1 0 0 1 54 691 Tm (November 2026.) Tj ET
 BT /F2 13 Tf 0.62 0.10 0.08 rg 1 0 0 1 54 670 Tm (1. Open the administrator page) Tj ET
-BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 643 Tm (Open https://rastaaashu.github.io/ireland-games-map/admin.html after Aashutosh has completed) Tj ET
-BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 629 Tm (setup and published this update. You can also open the map's About tab and choose Manage) Tj ET
-BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 615 Tm (entries. The administrator page needs an internet connection. A message saying the live) Tj ET
-BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 601 Tm (service is not configured means setup is still pending.) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 643 Tm (Open the map at https://rastaaashu.github.io/ireland-games-map/ and choose the Settings tab at) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 629 Tm (the top. Press Manage entries and log in. The editor opens over the map; press Back to map) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 615 Tm (when you finish. It needs an internet connection. A message saying the live service is not) Tj ET
+BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 601 Tm (configured means setup is still pending.) Tj ET
 BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 580 Tm (Use your own account. Aashutosh creates it and gives you its initial password privately. Keep) Tj ET
 BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 566 Tm (the password in a password manager. Do not put it in a shared document or email it to a group.) Tj ET
 BT /F1 10.5 Tf 0.12 0.14 0.16 rg 1 0 0 1 54 552 Tm (No commands are needed for everyday editing.) Tj ET
@@ -200,17 +200,17 @@ xref
 0000000148 00000 n 
 0000000218 00000 n 
 0000000293 00000 n 
-0000003693 00000 n 
-0000003835 00000 n 
-0000008772 00000 n 
-0000008914 00000 n 
-0000012279 00000 n 
-0000012422 00000 n 
-0000015496 00000 n 
-0000015640 00000 n 
-0000018090 00000 n 
+0000003685 00000 n 
+0000003827 00000 n 
+0000008764 00000 n 
+0000008906 00000 n 
+0000012271 00000 n 
+0000012414 00000 n 
+0000015488 00000 n 
+0000015632 00000 n 
+0000018082 00000 n 
 trailer
 << /Size 15 /Root 1 0 R >>
 startxref
-18234
+18226
 %%EOF
